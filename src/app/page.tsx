@@ -33,13 +33,14 @@ const doctor = [
   },
 ];
 
-const customer = [
+const appointment = [
   {
     name: "ภัทราพร ชัยเพชร์",
     treat: "ครอบฟันหรือสะพานฟัน",
     number: 6401002,
     tel: "0924835486",
     time: "11:00-11.30",
+    doctor: doctor.find((d) => d.name === "สมมุติ ทดสอบ"),
   },
 ];
 
@@ -91,9 +92,11 @@ export default function Home() {
             color: "white",
             padding: "4px",
             marginTop: "8px",
+            display: "flex",
+            alignItems: "center",
           }}
         >
-          2
+          <h3>ทันตแพทย์</h3>
         </div>
         <div
           style={{
@@ -114,7 +117,7 @@ export default function Home() {
             const [, minute] = time.split(":");
             const isBold = minute === "00";
             const backgroundColor = index % 2 !== 0 ? "#f7f7f7" : "#ffffff";
-            const isTimeMatched = customer.some((data) => {
+            const isTimeMatched = appointment.some((data) => {
               const [customerStartTime, customerEndTime] = data.time.split("-");
               return time === customerStartTime;
             });
@@ -148,7 +151,7 @@ export default function Home() {
                   }}
                 >
                   {isTimeMatched &&
-                    customer.map((data, i) => (
+                    appointment.map((data, i) => (
                       <div
                         style={{
                           position: "absolute",

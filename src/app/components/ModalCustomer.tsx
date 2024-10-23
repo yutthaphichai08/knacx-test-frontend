@@ -47,12 +47,9 @@ export default function ModalCustomer(props: ICustomer) {
     <div
       style={{
         minHeight: "60px",
-        height: `${height}px`, // Set the height dynamically
+        height: `${height}px`,
         width: "100%",
         display: "flex",
-        borderRadius: "6px",
-        overflow: "hidden",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Add shadow here
       }}
     >
       <div
@@ -60,18 +57,21 @@ export default function ModalCustomer(props: ICustomer) {
           width: "20px",
           height: "auto",
           background: "#f0f4fa",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+          borderRadius: "4px 0px 0px 4px",
         }}
       ></div>
       <div
+        className="detail"
         style={{
-          width: "auto",
-          height: "auto",
+          display: "inline-block",
           background: "orange",
           padding: "0 4px",
-          borderRadius: "0 6px 6px 0",
+          borderRadius: "0px 4px 4px 0px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
         }}
       >
-        <p style={{ fontSize: "14px", fontWeight: "bold" }}>
+        <p style={{ fontSize: "14px", fontWeight: "bold", margin: 0 }}>
           {name} | {treat} | {number} <br />
           {tel} | {time} น.
         </p>

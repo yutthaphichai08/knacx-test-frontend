@@ -19,6 +19,8 @@ export default function ModalDetail(props: IModalDetail) {
         height: "auto",
         borderRadius: "4px",
         backgroundColor: "white",
+        position: "absolute",
+        margin: "-20px 0 0 200px  ",
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between" }}>

@@ -136,7 +136,14 @@ export default function Home() {
             justifyContent: "space-between",
           }}
         >
-          <h2 style={{ fontFamily: "THSarabunBold" }}>ทันตแพทย์</h2>
+          <h2
+            style={{
+              fontFamily: "THSarabunBold",
+              margin: 0,
+            }}
+          >
+            ทันตแพทย์
+          </h2>
 
           {selectedDoctor && (
             <div

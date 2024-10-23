@@ -1,3 +1,8 @@
+## Technologies Used
+
+- **Next.js with TypeScript**: For web application development.
+- **Bootstrap**: A front-end library for building responsive and visually appealing user interfaces.
+
 ## Installation
 
 Clone the repository:

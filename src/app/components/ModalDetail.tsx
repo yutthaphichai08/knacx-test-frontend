@@ -1,6 +1,6 @@
 interface IModalDetail {
   name: string;
-  number: string;
+  number: number;
   service: string;
   tel: string;
   expenses: string;
@@ -20,14 +20,28 @@ export default function ModalDetail(props: IModalDetail) {
         backgroundColor: "white",
         position: "absolute",
         margin: "-20px 0 0 200px  ",
+        fontFamily: "THSarabun",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <p style={{ fontWeight: "bold", color: "#1cba95", padding: "4px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          fontSize: "25px",
+          lineHeight: "1",
+        }}
+      >
+        <p
+          style={{
+            fontWeight: "bold",
+            color: "#1cba95",
+            padding: "4px",
+          }}
+        >
           นัดหมาย <br />
           ทันตแพทย์ คุณหมอ{name}
         </p>
-        <div style={{ display: "flex", gap: "4px", padding: "4px" }}>
+        <div style={{ display: "flex", gap: "4px", padding: "0px 4px" }}>
           <div
             style={{
               objectFit: "cover",
@@ -48,7 +62,15 @@ export default function ModalDetail(props: IModalDetail) {
           </div>
         </div>
       </div>
-      <div style={{ display: "flex", width: "100%" }}>
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          fontSize: "22px",
+          lineHeight: "1",
+          fontWeight: "bold",
+        }}
+      >
         <div style={{ width: "70%", display: "flex", gap: "8px" }}>
           <div
             style={{
@@ -60,6 +82,13 @@ export default function ModalDetail(props: IModalDetail) {
             <i className="bi bi-person-fill" style={{ color: "#bbbdbf" }}></i>
             &nbsp;
             {number} | {name} <br />
+            <img
+              src={"/image/tooth.png"}
+              alt="tooth"
+              width={24}
+              height={24}
+              style={{ color: "#bbbdbf" }}
+            />
             บริการ&nbsp;{service}
             <br />
             <i

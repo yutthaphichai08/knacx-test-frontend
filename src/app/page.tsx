@@ -49,7 +49,7 @@ const doctor = [
     expenses: "500.00",
     time: "12:00 - 12:30",
     image:
-      "https://thumbs.dreamstime.com/b/young-smiling-man-doctor-avatar-medical-specialist-medicine-concept-cute-d-icon-people-character-illustration-cartoon-minimal-274327161.jpg",
+      "https://www.publicdomainpictures.net/pictures/450000/nahled/medical-doctor-cartoon-clipart.png",
   },
 ];
 
@@ -135,7 +135,7 @@ export default function Home() {
             justifyContent: "space-between",
           }}
         >
-          <h3>ทันตแพทย์</h3>
+          <h2 style={{ fontFamily: "THSarabunBold" }}>ทันตแพทย์</h2>
 
           {selectedDoctor && (
             <div
@@ -264,12 +264,8 @@ export default function Home() {
                       />
                       {hoveredAppointment && (
                         <ModalDetail
-                          name={hoveredAppointment.doctor}
-                          number={
-                            doctor.find(
-                              (d) => d.name === hoveredAppointment.doctor
-                            )?.number ?? ""
-                          }
+                          name={appointmentForTime.name ?? ""}
+                          number={appointmentForTime.number ?? ""}
                           service={
                             doctor.find(
                               (d) => d.name === hoveredAppointment.doctor
@@ -302,7 +298,12 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="head2" style={{ width: "50%" }}>
+      <div
+        className="head2"
+        style={{
+          width: "50%",
+        }}
+      >
         <div
           style={{
             display: "flex",
@@ -310,11 +311,19 @@ export default function Home() {
           }}
         >
           <div>
-            <h3>วันที่ 30 ม.ค. 2564</h3>
+            <p
+              style={{
+                fontFamily: "THSarabunBold",
+                fontSize: "30px",
+              }}
+            >
+              วันที่ 30 ม.ค. 2564
+            </p>
           </div>
           <div
             style={{
               display: "flex",
+              justifyContent: "center",
             }}
           >
             <div
@@ -322,12 +331,13 @@ export default function Home() {
                 background: "#d7e8f5",
                 padding: "0 60px",
                 borderRadius: "2px",
-                fontWeight: "bold",
               }}
             >
               <p
                 style={{
                   color: "#cc9870",
+                  fontFamily: "THSarabunBold",
+                  fontSize: "24px",
                 }}
               >
                 รายได้ทั้งหมด 0.00 บาท

@@ -71,7 +71,14 @@ export default function ModalCustomer(props: ICustomer) {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
         }}
       >
-        <p style={{ fontSize: "14px", fontWeight: "bold", margin: 0 }}>
+        <p
+          style={{
+            fontSize: "20px",
+            fontWeight: "bold",
+            margin: 0,
+            fontFamily: "THSarabun",
+          }}
+        >
           {name} | {treat} | {number} <br />
           {tel} | {time} น.
         </p>

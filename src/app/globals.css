@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "THSarabun";
+  src: url("/fonts/THSarabun.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "THSarabunBold";
+  src: url("/fonts/THSarabunBold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
 /* :root {
   --background: #ffffff;
   --foreground: #171717;

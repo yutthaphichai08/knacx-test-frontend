@@ -386,6 +386,8 @@ export default function Home() {
             justifyContent: "space-around",
             gap: "8px",
             marginTop: "4px",
+            fontFamily: "THSarabunBold",
+            fontSize: "20px",
           }}
         >
           <div

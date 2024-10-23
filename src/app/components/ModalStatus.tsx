@@ -97,7 +97,7 @@ export default function ModalStatus(props: IModalStatus) {
             {day} วัน
           </div>
         </div>
-        <div style={{ width: "auto" }}>
+        <div style={{ width: "30px" }}>
           <div
             style={{
               background: "#2f4261",
@@ -112,7 +112,7 @@ export default function ModalStatus(props: IModalStatus) {
               className="bi bi-ban"
               style={{
                 color: "red",
-                fontSize: "24px",
+                fontSize: "16px",
                 display: "flex",
                 justifyContent: "flex-end",
               }}

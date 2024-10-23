@@ -3,6 +3,7 @@
 import { SetStateAction, useState } from "react";
 import ModalCustomer from "./components/ModalCustomer";
 import ModalDetail from "./components/ModalDetail";
+import ModalStatus from "./components/ModalStatus";
 
 interface Appointment {
   name: string;
@@ -103,7 +104,7 @@ export default function Home() {
 
   return (
     <div className="container mt-3" style={{ display: "flex", gap: "40px" }}>
-      <div style={{ width: "50%" }}>
+      <div style={{ width: "40%" }}>
         <div>
           <select
             className="form-select"
@@ -301,7 +302,7 @@ export default function Home() {
       <div
         className="head2"
         style={{
-          width: "50%",
+          width: "60%",
         }}
       >
         <div
@@ -323,7 +324,7 @@ export default function Home() {
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <div
@@ -331,6 +332,8 @@ export default function Home() {
                 background: "#d7e8f5",
                 padding: "0 60px",
                 borderRadius: "2px",
+                display: "flex",
+                alignItems: "center",
               }}
             >
               <p
@@ -388,13 +391,13 @@ export default function Home() {
             </div>
             {dataAdmin.map((data, i) => (
               <div key={i} className="card-body">
-                <div className="card">
-                  <div className="card-body">
-                    <p>{i + 1}</p>
-                    <p>{data.name ?? ""}</p>
-                    <p>{data.number ?? ""}</p>
-                  </div>
-                </div>
+                <ModalStatus
+                  index={"01"}
+                  name={data.name}
+                  number={data.number}
+                  day={9}
+                  numR={"05"}
+                />
               </div>
             ))}
           </div>
@@ -414,13 +417,13 @@ export default function Home() {
 
             {payment.map((data, i) => (
               <div key={i} className="card-body">
-                <div className="card">
-                  <div className="card-body">
-                    <p>{i + 1}</p>
-                    <p>{data.name ?? ""}</p>
-                    <p>{data.number ?? ""}</p>
-                  </div>
-                </div>
+                <ModalStatus
+                  index={"01"}
+                  name={data.name}
+                  number={data.number}
+                  day={5}
+                  numR={"03"}
+                />
               </div>
             ))}
           </div>

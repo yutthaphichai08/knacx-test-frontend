@@ -13,7 +13,6 @@ export default function ModalDetail(props: IModalDetail) {
   return (
     <div
       style={{
-        padding: "4px",
         border: "1px solid #bbbdbf ",
         width: "400px",
         height: "auto",
@@ -24,11 +23,11 @@ export default function ModalDetail(props: IModalDetail) {
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <p style={{ fontWeight: "bold", color: "#1cba95" }}>
+        <p style={{ fontWeight: "bold", color: "#1cba95", padding: "4px" }}>
           นัดหมาย <br />
-          ทันตแพทย์ คุณหมอ
+          ทันตแพทย์ คุณหมอ{name}
         </p>
-        <div style={{ display: "flex", gap: "4px" }}>
+        <div style={{ display: "flex", gap: "4px", padding: "4px" }}>
           <div
             style={{
               objectFit: "cover",
@@ -41,21 +40,58 @@ export default function ModalDetail(props: IModalDetail) {
           >
             <img src={image} width={45} height={45} />
           </div>
-          <div>icon</div>
+          <div>
+            <i
+              className="bi bi-x"
+              style={{ fontSize: "2rem", color: "#bbbdbf" }}
+            ></i>
+          </div>
         </div>
       </div>
-      <p style={{ marginBottom: "0px" }}>
-        {name} <br />
-        {number} <br />
-        {service}
-        <br />
-        {tel}
-        <br />
-        {expenses}
-        <br />
-        {time}
-        <br />
-      </p>
+      <div style={{ display: "flex", width: "100%" }}>
+        <div style={{ width: "70%", display: "flex", gap: "8px" }}>
+          <div
+            style={{
+              width: "20px",
+              background: "#bbbdbf",
+            }}
+          ></div>
+          <p style={{ marginBottom: "0px" }}>
+            <i className="bi bi-person-fill" style={{ color: "#bbbdbf" }}></i>
+            &nbsp;
+            {number} | {name} <br />
+            บริการ&nbsp;{service}
+            <br />
+            <i
+              className="bi bi-telephone-fill"
+              style={{ color: "#bbbdbf" }}
+            ></i>
+            &nbsp;
+            {tel}
+            <br />
+            ประเมินค่าใช้จ่าย&nbsp;{expenses}
+            <br />
+            <i className="bi bi-clock-fill" style={{ color: "#bbbdbf" }}></i>
+            &nbsp;
+            {time}
+            <br />
+          </p>
+        </div>
+        <div
+          style={{
+            width: "30%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "self-end",
+            padding: "6px",
+            fontSize: "2rem",
+            color: "#bbbdbf",
+          }}
+        >
+          <i className="bi bi-file-earmark-text"></i>
+          <i className="bi bi-pencil-fill"></i>
+        </div>
+      </div>
     </div>
   );
 }

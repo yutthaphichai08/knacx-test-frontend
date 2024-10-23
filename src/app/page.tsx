@@ -315,6 +315,7 @@ export default function Home() {
           style={{
             display: "flex",
             justifyContent: "space-between",
+            margin: " 0 16px",
           }}
         >
           <div
@@ -330,7 +331,6 @@ export default function Home() {
                 fontSize: "45px",
                 lineHeight: "1",
                 margin: 0,
-                marginLeft: "10px",
               }}
             >
               วันที่ 30 ม.ค. 2564

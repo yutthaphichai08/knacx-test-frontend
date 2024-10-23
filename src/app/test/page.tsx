@@ -1,5 +1,14 @@
-import ModalCustomer from "../components/ModalCustomer";
+import ModalDetail from "../components/ModalDetail";
 
 export default function Test() {
-  return <div>Test</div>;
+  return (
+    <ModalDetail
+      expenses="200"
+      name={"tsasa"}
+      number={"1234"}
+      service={"ss"}
+      tel={"asdaad"}
+      time={"18.00-20.00"}
+    />
+  );
 }

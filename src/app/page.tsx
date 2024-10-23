@@ -1,7 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import ModalCustomer from "./components/ModalCustomer";
+import ModalDetail from "./components/ModalDetail";
+
+interface Appointment {
+  name: string;
+  treat: string;
+  number: number;
+  tel: string;
+  time: string;
+  doctor: string;
+}
 
 const dataAdmin = [
   {
@@ -20,19 +30,25 @@ const payment = [
 const doctor = [
   {
     name: "สมมุติ ทดสอบ",
+    number: "6400004",
     role: "ทันตแพทย์",
     service: "รักษารากฟัน",
     tel: "095-646-0428",
     expenses: "0.00",
-    time: "18:00-18:30",
+    time: "18:00 - 18:30",
+    image:
+      "https://thumbs.dreamstime.com/b/young-smiling-old-man-doctor-medical-specialist-medicine-concept-cute-d-icon-people-character-illustration-cartoon-minimal-young-279139332.jpg",
   },
   {
     name: "วิทยา ใจดี",
+    number: "6400004",
     role: "ทันตแพทย์",
     service: "ทันตกรรมทั่วไป",
     tel: "089-123-4567",
     expenses: "500.00",
-    time: "12:00-12:30",
+    time: "12:00 - 12:30",
+    image:
+      "https://thumbs.dreamstime.com/b/young-smiling-man-doctor-avatar-medical-specialist-medicine-concept-cute-d-icon-people-character-illustration-cartoon-minimal-274327161.jpg",
   },
 ];
 
@@ -57,6 +73,8 @@ const appointment = [
 
 export default function Home() {
   const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [hoveredAppointment, setHoveredAppointment] =
+    useState<Appointment | null>(null);
 
   // Filter appointments based on selected doctor
   const filteredAppointments = appointment.filter(
@@ -90,6 +108,10 @@ export default function Home() {
     startTime += 15; // เพิ่มทีละ 15 นาที
   }
 
+  const handleDoctorSelect = (name: SetStateAction<string>) => {
+    setSelectedDoctor(name); // Set selected doctor
+  };
+
   return (
     <div className="container mt-3" style={{ display: "flex", gap: "40px" }}>
       <div style={{ width: "50%" }}>
@@ -97,33 +119,19 @@ export default function Home() {
           <select
             className="form-select"
             aria-label="Select a doctor"
+            value={selectedDoctor} // Set the value to the selectedDoctor state
             onChange={(e) => setSelectedDoctor(e.target.value)}
           >
+            <option value="" disabled>
+              กรุณาเลือกทันตแพทย์
+            </option>{" "}
+            {/* Placeholder option */}
             {doctor.map((doc, index) => (
               <option key={index} value={doc.name}>
                 คุณหมอ {doc.name}
               </option>
             ))}
           </select>
-
-          {/* {selectedDoctor && (
-            <>
-              <h3>Appointments for {selectedDoctor}</h3>
-              {filteredAppointments.length > 0 ? (
-                <ul>
-                  {filteredAppointments.map((appt, index) => (
-                    <li key={index}>
-                      <strong>Patient:</strong> {appt.name},{" "}
-                      <strong>Treat:</strong> {appt.treat},{" "}
-                      <strong>Time:</strong> {appt.time}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No appointments for this doctor.</p>
-              )}
-            </>
-          )} */}
         </div>
         <div
           style={{
@@ -135,10 +143,62 @@ export default function Home() {
             marginTop: "8px",
             display: "flex",
             alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
           <h3>ทันตแพทย์</h3>
+
+          {selectedDoctor && (
+            <div
+              style={{
+                objectFit: "cover",
+                width: "45px",
+                height: "45px",
+                borderRadius: "50%",
+                overflow: "hidden",
+                marginRight: "4px",
+              }}
+            >
+              {doctor
+                .filter((doc) => doc.name === selectedDoctor)
+                .map((doc) => (
+                  <img key={doc.name} src={doc.image} width={45} height={45} />
+                ))}
+            </div>
+          )}
         </div>
+
+        {/* Clickable Doctor Images Section */}
+        <div style={{ marginTop: "20px" }}>
+          <div style={{ display: "flex", gap: "20px" }}>
+            {doctor.map((doc) => (
+              <div
+                key={doc.name}
+                onClick={() => handleDoctorSelect(doc.name)}
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  src={doc.image}
+                  alt={doc.name}
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    border:
+                      selectedDoctor === doc.name ? "2px solid blue" : "none", // Highlight selected image
+                  }}
+                />
+                <span>{doc.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div
           style={{
             background: "#9edecd",
@@ -155,7 +215,7 @@ export default function Home() {
         </div>
         <div>
           {times.map((time, index) => {
-            const [, minute] = time.split(":");
+            const [minute] = time.split(":");
             const isBold = minute === "00";
             const backgroundColor = index % 2 !== 0 ? "#f7f7f7" : "#ffffff";
 
@@ -199,8 +259,12 @@ export default function Home() {
                         position: "absolute",
                         left: 0,
                         top: 0,
-                        zIndex: 999,
+                        zIndex: 99,
                       }}
+                      onMouseEnter={() =>
+                        setHoveredAppointment(appointmentForTime)
+                      }
+                      onMouseLeave={() => setHoveredAppointment(null)}
                     >
                       <ModalCustomer
                         name={appointmentForTime.name ?? ""}
@@ -209,6 +273,32 @@ export default function Home() {
                         tel={appointmentForTime.tel ?? ""}
                         time={appointmentForTime.time ?? ""}
                       />
+                      {hoveredAppointment && (
+                        <ModalDetail
+                          name={hoveredAppointment.doctor}
+                          number={
+                            doctor.find(
+                              (d) => d.name === hoveredAppointment.doctor
+                            )?.number ?? ""
+                          }
+                          service={
+                            doctor.find(
+                              (d) => d.name === hoveredAppointment.doctor
+                            )?.service ?? ""
+                          }
+                          tel={
+                            doctor.find(
+                              (d) => d.name === hoveredAppointment.doctor
+                            )?.tel ?? ""
+                          }
+                          expenses={
+                            doctor.find(
+                              (d) => d.name === hoveredAppointment.doctor
+                            )?.expenses ?? ""
+                          }
+                          time={hoveredAppointment.time}
+                        />
+                      )}
                     </div>
                   )}
                 </div>
@@ -228,7 +318,11 @@ export default function Home() {
           <div>
             <h3>วันที่ 30 ม.ค. 2564</h3>
           </div>
-          <div style={{ display: "flex" }}>
+          <div
+            style={{
+              display: "flex",
+            }}
+          >
             <div
               style={{
                 background: "#d7e8f5",
@@ -266,6 +360,8 @@ export default function Home() {
             style={{
               width: "100%",
               backgroundColor: "#d7e8f5",
+              minHeight: "600px",
+              height: " auto",
             }}
           >
             <div

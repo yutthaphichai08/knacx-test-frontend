@@ -38,7 +38,7 @@ export default function ModalCustomer(props: ICustomer) {
 
     // Calculate height: 60px for 30 minutes, so 15px for each 15 minutes
     const height = (diffInMinutes / 15) * 15; // For every 15 minutes, add 15px
-    return height + 40; // Add a base height of 60px
+    return height + 40; // Add a base height of 40px
   };
 
   const height = calculateHeight(time);

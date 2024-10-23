@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import ModalCustomer from "./components/ModalCustomer";
 
 const dataAdmin = [
@@ -29,7 +32,7 @@ const doctor = [
     service: "ทันตกรรมทั่วไป",
     tel: "089-123-4567",
     expenses: "500.00",
-    time: "09:00-09:30",
+    time: "12:00-12:30",
   },
 ];
 
@@ -40,49 +43,87 @@ const appointment = [
     number: 6401002,
     tel: "0924835486",
     time: "11:00-11.30",
-    doctor: doctor.find((d) => d.name === "สมมุติ ทดสอบ"),
+    doctor: "สมมุติ ทดสอบ",
+  },
+  {
+    name: "นันทนา โพธิ์ทอง",
+    treat: "ขูดหินปูน",
+    number: 6401003,
+    tel: "0987654321",
+    time: "14:00-14:30",
+    doctor: "วิทยา ใจดี",
   },
 ];
 
-const calculateHeight = (timeRange: string) => {
-  const [startTime, endTime] = timeRange.split("-");
-  const [startHour, startMinute] = startTime.split(":").map(Number);
-  const [endHour, endMinute] = endTime.split(":").map(Number);
-
-  const startInMinutes = startHour * 60 + startMinute;
-  const endInMinutes = endHour * 60 + endMinute;
-  const durationInMinutes = endInMinutes - startInMinutes;
-
-  return durationInMinutes * 2; // ตัวอย่าง: ใช้ 2px ต่อ 1 นาที
-};
-
-const times: string[] = [];
-let startTime = 10 * 60; // เริ่มต้นที่ 10:00 AM ในรูปแบบนาที
-const endTime = 19 * 60; // สิ้นสุดที่ 19:00 PM ในรูปแบบนาที
-
-// วนลูปเพิ่มเวลา 15 นาทีจนกว่าจะถึง 19:00
-while (startTime <= endTime) {
-  const hours = Math.floor(startTime / 60);
-  const minutes = startTime % 60;
-  const timeString = `${String(hours).padStart(2, "0")}:${String(
-    minutes
-  ).padStart(2, "0")}`;
-  times.push(timeString);
-  startTime += 15; // เพิ่มทีละ 15 นาที
-}
-
 export default function Home() {
+  const [selectedDoctor, setSelectedDoctor] = useState("");
+
+  // Filter appointments based on selected doctor
+  const filteredAppointments = appointment.filter(
+    (appt) => appt.doctor === selectedDoctor
+  );
+
+  const calculateHeight = (timeRange: string) => {
+    const [startTime, endTime] = timeRange.split("-");
+    const [startHour, startMinute] = startTime.split(":").map(Number);
+    const [endHour, endMinute] = endTime.split(":").map(Number);
+
+    const startInMinutes = startHour * 60 + startMinute;
+    const endInMinutes = endHour * 60 + endMinute;
+    const durationInMinutes = endInMinutes - startInMinutes;
+
+    return durationInMinutes * 2; // ตัวอย่าง: ใช้ 2px ต่อ 1 นาที
+  };
+
+  const times: string[] = [];
+  let startTime = 10 * 60; // เริ่มต้นที่ 10:00 AM ในรูปแบบนาที
+  const endTime = 19 * 60; // สิ้นสุดที่ 19:00 PM ในรูปแบบนาที
+
+  // วนลูปเพิ่มเวลา 15 นาทีจนกว่าจะถึง 19:00
+  while (startTime <= endTime) {
+    const hours = Math.floor(startTime / 60);
+    const minutes = startTime % 60;
+    const timeString = `${String(hours).padStart(2, "0")}:${String(
+      minutes
+    ).padStart(2, "0")}`;
+    times.push(timeString);
+    startTime += 15; // เพิ่มทีละ 15 นาที
+  }
+
   return (
     <div className="container mt-3" style={{ display: "flex", gap: "40px" }}>
       <div style={{ width: "50%" }}>
         <div>
-          <select className="form-select" aria-label="Default select example">
+          <select
+            className="form-select"
+            aria-label="Select a doctor"
+            onChange={(e) => setSelectedDoctor(e.target.value)}
+          >
             {doctor.map((doc, index) => (
               <option key={index} value={doc.name}>
-                คุณหมอ{doc.name}
+                คุณหมอ {doc.name}
               </option>
             ))}
           </select>
+
+          {/* {selectedDoctor && (
+            <>
+              <h3>Appointments for {selectedDoctor}</h3>
+              {filteredAppointments.length > 0 ? (
+                <ul>
+                  {filteredAppointments.map((appt, index) => (
+                    <li key={index}>
+                      <strong>Patient:</strong> {appt.name},{" "}
+                      <strong>Treat:</strong> {appt.treat},{" "}
+                      <strong>Time:</strong> {appt.time}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No appointments for this doctor.</p>
+              )}
+            </>
+          )} */}
         </div>
         <div
           style={{
@@ -117,9 +158,11 @@ export default function Home() {
             const [, minute] = time.split(":");
             const isBold = minute === "00";
             const backgroundColor = index % 2 !== 0 ? "#f7f7f7" : "#ffffff";
-            const isTimeMatched = appointment.some((data) => {
-              const [customerStartTime, customerEndTime] = data.time.split("-");
-              return time === customerStartTime;
+
+            // Check if there's an appointment for the current time slot
+            const appointmentForTime = filteredAppointments.find((data) => {
+              const [startTime] = data.time.split("-");
+              return time === startTime;
             });
 
             return (
@@ -144,32 +187,30 @@ export default function Home() {
                   style={{
                     marginLeft: "10px",
                     background: backgroundColor,
-                    height: "40px", // ใช้ความสูงตามปกติ
+                    height: "40px",
                     width: "100%",
-                    position: "relative", // ทำให้สามารถใช้ตำแหน่ง absolute ได้
-                    overflow: "visible", // ป้องกันการตัดบล็อก
+                    position: "relative",
+                    overflow: "visible",
                   }}
                 >
-                  {isTimeMatched &&
-                    appointment.map((data, i) => (
-                      <div
-                        style={{
-                          position: "absolute",
-                          left: 0,
-                          top: 0,
-                          zIndex: 999,
-                        }}
-                        key={i}
-                      >
-                        <ModalCustomer
-                          name={data.name}
-                          treat={data.treat}
-                          number={data.number}
-                          tel={data.tel}
-                          time={data.time}
-                        />
-                      </div>
-                    ))}
+                  {appointmentForTime && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        zIndex: 999,
+                      }}
+                    >
+                      <ModalCustomer
+                        name={appointmentForTime.name ?? ""}
+                        treat={appointmentForTime.treat ?? ""}
+                        number={appointmentForTime.number ?? ""}
+                        tel={appointmentForTime.tel ?? ""}
+                        time={appointmentForTime.time ?? ""}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             );

@@ -1,3 +1,5 @@
+import ModalCustomer from "./components/ModalCustomer";
+
 const dataAdmin = [
   {
     name: "วรภัทร บารมี",
@@ -35,23 +37,21 @@ const customer = [
   {
     name: "ภัทราพร ชัยเพชร์",
     treat: "ครอบฟันหรือสะพานฟัน",
-    number: "6401002",
+    number: 6401002,
     tel: "0924835486",
     time: "11:00-11.30",
   },
 ];
 
-const calculateHeight = (timeRange: any) => {
-  const [startTime, endTime] = timeRange.split("-"); // แยกเวลาเริ่มต้นและเวลาสิ้นสุด
-  const [startHour, startMinute] = startTime.split(":").map(Number); // แยกชั่วโมงและนาทีเริ่มต้น
-  const [endHour, endMinute] = endTime.split(":").map(Number); // แยกชั่วโมงและนาทีสิ้นสุด
+const calculateHeight = (timeRange: string) => {
+  const [startTime, endTime] = timeRange.split("-");
+  const [startHour, startMinute] = startTime.split(":").map(Number);
+  const [endHour, endMinute] = endTime.split(":").map(Number);
 
-  // คำนวณเวลาในนาที
   const startInMinutes = startHour * 60 + startMinute;
   const endInMinutes = endHour * 60 + endMinute;
-
-  // คำนวณระยะเวลา
   const durationInMinutes = endInMinutes - startInMinutes;
+
   return durationInMinutes * 2; // ตัวอย่าง: ใช้ 2px ต่อ 1 นาที
 };
 
@@ -61,8 +61,8 @@ const endTime = 19 * 60; // สิ้นสุดที่ 19:00 PM ในรู
 
 // วนลูปเพิ่มเวลา 15 นาทีจนกว่าจะถึง 19:00
 while (startTime <= endTime) {
-  const hours = Math.floor(startTime / 60); // หาชั่วโมงจากนาที
-  const minutes = startTime % 60; // หานาทีจากการหารเศษของ 60
+  const hours = Math.floor(startTime / 60);
+  const minutes = startTime % 60;
   const timeString = `${String(hours).padStart(2, "0")}:${String(
     minutes
   ).padStart(2, "0")}`;
@@ -111,23 +111,25 @@ export default function Home() {
         </div>
         <div>
           {times.map((time, index) => {
-            // แยกเวลาเป็นชั่วโมงและนาที
-            const [hour, minute] = time.split(":");
-
-            // ถ้านาทีเป็น 00 ให้แสดงตัวหนา
+            const [, minute] = time.split(":");
             const isBold = minute === "00";
-
-            // กำหนดสีพื้นหลังตาม index (คู่หรือคี่)
             const backgroundColor = index % 2 !== 0 ? "#f7f7f7" : "#ffffff";
+            const isTimeMatched = customer.some((data) => {
+              const [customerStartTime, customerEndTime] = data.time.split("-");
+              return time === customerStartTime;
+            });
 
             return (
-              <div style={{ display: "flex", gap: "12px" }} key={index}>
+              <div
+                style={{ display: "flex", gap: "12px", position: "relative" }}
+                key={index}
+              >
                 <div
                   className="time"
                   style={{
                     fontWeight: isBold ? "bold" : "normal",
                     background: backgroundColor,
-                    height: "60px",
+                    height: "40px",
                     width: "15%",
                     padding: "0 10px",
                   }}
@@ -139,10 +141,33 @@ export default function Home() {
                   style={{
                     marginLeft: "10px",
                     background: backgroundColor,
-                    height: "60px",
+                    height: "40px", // ใช้ความสูงตามปกติ
                     width: "100%",
+                    position: "relative", // ทำให้สามารถใช้ตำแหน่ง absolute ได้
+                    overflow: "visible", // ป้องกันการตัดบล็อก
                   }}
-                ></div>
+                >
+                  {isTimeMatched &&
+                    customer.map((data, i) => (
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          top: 0,
+                          zIndex: 999,
+                        }}
+                        key={i}
+                      >
+                        <ModalCustomer
+                          name={data.name}
+                          treat={data.treat}
+                          number={data.number}
+                          tel={data.tel}
+                          time={data.time}
+                        />
+                      </div>
+                    ))}
+                </div>
               </div>
             );
           })}

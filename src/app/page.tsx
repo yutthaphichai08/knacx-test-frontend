@@ -311,29 +311,40 @@ export default function Home() {
             justifyContent: "space-between",
           }}
         >
-          <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <p
               style={{
                 fontFamily: "THSarabunBold",
-                fontSize: "30px",
+                fontSize: "45px",
+                lineHeight: "1",
+                margin: 0,
+                marginLeft: "10px",
               }}
             >
               วันที่ 30 ม.ค. 2564
             </p>
           </div>
+
           <div
             style={{
               display: "flex",
-              alignItems: "center",
             }}
           >
             <div
               style={{
                 background: "#d7e8f5",
-                padding: "0 60px",
+                padding: "0 70px",
                 borderRadius: "2px",
                 display: "flex",
+                justifyContent: "center",
                 alignItems: "center",
+                height: "45px",
               }}
             >
               <p
@@ -341,18 +352,27 @@ export default function Home() {
                   color: "#cc9870",
                   fontFamily: "THSarabunBold",
                   fontSize: "24px",
+                  margin: 0, // กำจัด margin เพื่อให้จัดตำแหน่งได้ถูกต้อง
                 }}
               >
                 รายได้ทั้งหมด 0.00 บาท
               </p>
             </div>
-            <div style={{ marginLeft: "16px" }}>
+            <div
+              style={{
+                marginLeft: "16px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <button className="btn btn-outline-danger">
                 <i className="bi bi-arrow-clockwise"></i>
               </button>
             </div>
           </div>
         </div>
+
         <div
           className="h2-1"
           style={{

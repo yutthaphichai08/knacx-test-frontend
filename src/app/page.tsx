@@ -11,6 +11,7 @@ interface Appointment {
   tel: string;
   time: string;
   doctor: string;
+  // image: string | undefined;
 }
 
 const dataAdmin = [
@@ -80,18 +81,6 @@ export default function Home() {
   const filteredAppointments = appointment.filter(
     (appt) => appt.doctor === selectedDoctor
   );
-
-  const calculateHeight = (timeRange: string) => {
-    const [startTime, endTime] = timeRange.split("-");
-    const [startHour, startMinute] = startTime.split(":").map(Number);
-    const [endHour, endMinute] = endTime.split(":").map(Number);
-
-    const startInMinutes = startHour * 60 + startMinute;
-    const endInMinutes = endHour * 60 + endMinute;
-    const durationInMinutes = endInMinutes - startInMinutes;
-
-    return durationInMinutes * 2; // ตัวอย่าง: ใช้ 2px ต่อ 1 นาที
-  };
 
   const times: string[] = [];
   let startTime = 10 * 60; // เริ่มต้นที่ 10:00 AM ในรูปแบบนาที
@@ -297,6 +286,11 @@ export default function Home() {
                             )?.expenses ?? ""
                           }
                           time={hoveredAppointment.time}
+                          image={
+                            doctor.find(
+                              (d) => d.name === hoveredAppointment.doctor
+                            )?.image ?? ""
+                          }
                         />
                       )}
                     </div>

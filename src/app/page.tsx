@@ -115,7 +115,6 @@ export default function Home() {
             <option value="" disabled>
               กรุณาเลือกทันตแพทย์
             </option>{" "}
-            {/* Placeholder option */}
             {doctor.map((doc, index) => (
               <option key={index} value={doc.name}>
                 คุณหมอ {doc.name}
@@ -187,7 +186,7 @@ export default function Home() {
                     height: "50px",
                     borderRadius: "50%",
                     border:
-                      selectedDoctor === doc.name ? "2px solid blue" : "none", // Highlight selected image
+                      selectedDoctor === doc.name ? "2px solid blue" : "none",
                   }}
                 />
                 <span>{doc.name}</span>

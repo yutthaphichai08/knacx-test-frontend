@@ -109,12 +109,12 @@ export default function Home() {
           <select
             className="form-select"
             aria-label="Select a doctor"
-            value={selectedDoctor} // Set the value to the selectedDoctor state
+            value={selectedDoctor}
             onChange={(e) => setSelectedDoctor(e.target.value)}
           >
             <option value="" disabled>
               กรุณาเลือกทันตแพทย์
-            </option>{" "}
+            </option>
             {doctor.map((doc, index) => (
               <option key={index} value={doc.name}>
                 คุณหมอ {doc.name}
@@ -211,8 +211,8 @@ export default function Home() {
         </div>
         <div>
           {times.map((time, index) => {
-            const [minute] = time.split(":");
-            const isBold = minute === "00";
+            const [, minutes] = time.split(":");
+            const isBold = minutes === "00"; // Check if the minute part is '00'
             const backgroundColor = index % 2 !== 0 ? "#f7f7f7" : "#ffffff";
 
             // Check if there's an appointment for the current time slot
@@ -229,7 +229,7 @@ export default function Home() {
                 <div
                   className="time"
                   style={{
-                    fontWeight: isBold ? "bold" : "normal",
+                    fontWeight: isBold ? "bold" : "normal", // Bold if minutes are '00'
                     background: backgroundColor,
                     height: "40px",
                     width: "15%",

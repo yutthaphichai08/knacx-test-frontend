@@ -10,7 +10,7 @@ Clone the repository:
 ```bash
 git clone https://github.com/yutthaphichai08/knacx-test-frontend.git
 
-cd test-junior-frontend
+cd knacx-test-frontend
 ```
 
 ## Getting Started
